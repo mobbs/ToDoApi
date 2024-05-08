@@ -1,13 +1,13 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace ToDoApi.Models;
 
 public class TodoItem
 {
-    public int id  { get; set; }
-    public string name  { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
 
-    public TodoItem(int id, string name)
-    {
-        this.id = id;
-        this.name = name;
-    }
+    [BsonElement("name")] public string Description { get; set; } = null!;
 }
