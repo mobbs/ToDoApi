@@ -16,14 +16,4 @@ public class ToDoController : ControllerBase
     
     [HttpGet(Name = "GetToDo")]
     public async Task<List<TodoItem>> Get() => await _toDoService.GetAsync();
-    /*
-    {
-        
-        return new TodoItem[]
-        {
-            new TodoItem(1, "make dinner"),
-            new TodoItem(2, "put out the washing")
-        };
-    }
-    */
 }
