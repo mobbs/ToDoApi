@@ -23,7 +23,7 @@ To put some data in your db you can run the following
 
 `db.ToDoItems.find().pretty()` View the data in the collection
 
-## 3. Run the ToDoApi project
+### 3. Run the ToDoApi project
 You can now run the project and you will see the swagger documentation open in your browser
 ```angular2html
 http://localhost:5236/swagger/index.html
