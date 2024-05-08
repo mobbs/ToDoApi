@@ -4,7 +4,7 @@ using ToDoApi.Models;
 
 namespace ToDoApi.Services;
 
-public class ToDoService
+public class ToDoService : IToDoService
 {
     private readonly IMongoCollection<TodoItem> _toDoItemsCollection;
 
@@ -20,6 +20,6 @@ public class ToDoService
             toDoDatabaseSettings.Value.ToDoItemsCollectionName);
     }
 
-    public async Task<List<TodoItem>> GetAsync() =>
+    public async Task<List<TodoItem>> GetAll() =>
         await _toDoItemsCollection.Find(_ => true).ToListAsync();
 }

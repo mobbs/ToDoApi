@@ -9,11 +9,11 @@ namespace ToDoApi.Controllers;
 public class ToDoController : ControllerBase
 {
 
-    private readonly ToDoService _toDoService;
+    private readonly IToDoService _toDoService;
 
-    public ToDoController(ToDoService toDoService) => _toDoService = toDoService;
+    public ToDoController(IToDoService toDoService) => _toDoService = toDoService;
 
     
     [HttpGet(Name = "GetToDo")]
-    public async Task<List<TodoItem>> Get() => await _toDoService.GetAsync();
+    public async Task<List<TodoItem>> Get() => await _toDoService.GetAll();
 }

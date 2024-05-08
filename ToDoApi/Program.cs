@@ -13,8 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<ToDoItemsDatabaseSettings>(
     builder.Configuration.GetSection("ToDoItemsDatabase"));
 
-builder.Services.AddSingleton<ToDoService>();
-
+builder.Services.AddScoped<IToDoService, ToDoService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
