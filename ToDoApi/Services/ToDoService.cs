@@ -28,5 +28,7 @@ public class ToDoService : IToDoService
         return _toDoItemsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task CreateTodo(TodoItem toDo) => _toDoItemsCollection.InsertOneAsync(toDo);
+    public Task Create(TodoItem toDo) => _toDoItemsCollection.InsertOneAsync(toDo);
+    
+    public Task Update(string id, TodoItem toDo) => _toDoItemsCollection.ReplaceOneAsync(x => x.Id == id, toDo);
 }

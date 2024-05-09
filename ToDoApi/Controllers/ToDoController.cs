@@ -23,8 +23,23 @@ public class ToDoController : ControllerBase
     [HttpPost]
     public async Task<TodoItem> PostToDo(TodoItem toDo)
     {
-        await _toDoService.CreateTodo(toDo);
+        await _toDoService.Create(toDo);
         return await _toDoService.GetById(toDo.Id);
+    }
+    
+    [HttpPut("{id:length(24)}")]
+    public async Task<ActionResult<TodoItem>> PutToDo(string id, TodoItem toDo)
+    {
+        var existingToDo = await _toDoService.GetById(id);
+
+        if (existingToDo is null)
+        {
+            return NotFound();
+        }
+
+        toDo.Id = existingToDo.Id;
+        await _toDoService.Update(id, existingToDo);
+        return await _toDoService.GetById(id);
     }
     
 }
