@@ -47,4 +47,18 @@ public class ToDoController : ControllerBase
         return await _toDoService.GetById(id);
     }
     
+    [HttpDelete("{id:length(24)}")]
+    public async Task<ActionResult> Delete(string id)
+    {
+        var existingToDo = await _toDoService.GetById(id);
+        
+        if (existingToDo is null)
+        {
+            return NotFound();
+        }
+
+        await _toDoService.Remove(id);
+        return NoContent();
+    }
+    
 }

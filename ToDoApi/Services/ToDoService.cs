@@ -31,4 +31,5 @@ public class ToDoService : IToDoService
     public Task Create(TodoItem toDo) => _toDoItemsCollection.InsertOneAsync(toDo);
     
     public Task Update(string id, TodoItem toDo) => _toDoItemsCollection.ReplaceOneAsync(x => x.Id == id, toDo);
+    public Task Remove(string id) => _toDoItemsCollection.DeleteOneAsync(x => x.Id == id);
 }

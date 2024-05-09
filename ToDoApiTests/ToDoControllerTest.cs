@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Net;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NuGet.Frameworks;
@@ -89,5 +91,41 @@ public class ToDoControllerTest
         Debug.Assert(result.Value != null, "result.Value != null");
         Assert.Equal(_testTodo.Id, result.Value.Id);
         Assert.Equal(_testTodo.Description, result.Value.Description);
+    }
+    
+    [Fact]
+    public async void DeleteTodo_ShouldRemoveOne()
+    {
+        // Arrange
+        _toDoService.Setup(x => x.Remove(_testTodo.Id))
+            .Returns(Task.CompletedTask);
+        _toDoService.Setup(x => x.GetById(_testTodo.Id))
+            .Returns(Task.FromResult(_testTodo));
+        var toDoController = new ToDoController(_toDoService.Object);
+
+        // Act
+        var result = await toDoController.Delete(_testTodo.Id) as NoContentResult;
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.Equal(204, result.StatusCode);
+    }
+    
+    [Fact]
+    public async void DeleteTodo_DoesNotExist()
+    {
+        // Arrange
+        _toDoService.Setup(x => x.Remove(_testTodo.Id))
+            .Returns(Task.CompletedTask);
+        _toDoService.Setup(x => x.GetById(_testTodo.Id))
+            .Returns(Task.FromResult<TodoItem>(null));
+        var toDoController = new ToDoController(_toDoService.Object);
+
+        // Act
+        var result = await toDoController.Delete(_testTodo.Id) as NotFoundResult;
+
+        //Assert
+        Assert.NotNull(result);
+        Assert.Equal(404, result.StatusCode);
     }
 }
