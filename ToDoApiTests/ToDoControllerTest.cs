@@ -1,4 +1,5 @@
 using Moq;
+using NuGet.Frameworks;
 using ToDoApi.Controllers;
 using ToDoApi.Models;
 using ToDoApi.Services;
@@ -46,6 +47,24 @@ public class ToDoControllerTest
 
         // Assert
         Assert.Equal(idToGet, result.Id);
+        Assert.Equal(_testTodo.Description, result.Description);
+    }
+    
+    [Fact]
+    public async void PostTodo_ShouldCreateOne()
+    {
+        // Arrange
+        _toDoService.Setup(x => x.CreateTodo(_testTodo))
+            .Returns(Task.FromResult(_testTodo));
+        _toDoService.Setup(x => x.GetById(_testTodo.Id))
+            .Returns(Task.FromResult(_testTodo));
+        var toDoController = new ToDoController(_toDoService.Object);
+
+        // Act
+        var result = await toDoController.PostToDo(_testTodo);
+
+        // Assert 
+        Assert.Equal(_testTodo.Id, result.Id);
         Assert.Equal(_testTodo.Description, result.Description);
     }
 }
