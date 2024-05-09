@@ -56,6 +56,23 @@ public class ToDoControllerTest
     }
     
     [Fact]
+    public async void GetToDoById_DoesNotExist()
+    {
+        // Arrange
+        _toDoService.Setup(x => x.GetById(_testTodo.Id))
+            .Returns(Task.FromResult<TodoItem>(null));
+        var toDoController = new ToDoController(_toDoService.Object);
+
+        // Act
+        var result = await toDoController.GetToDoById(_testTodo.Id);
+
+        //Assert
+        Assert.NotNull(result);
+        var actualResult = result.Result as NotFoundResult;
+        Assert.Equal(404, actualResult.StatusCode);
+    }
+    
+    [Fact]
     public async void PostTodo_ShouldCreateOne()
     {
         // Arrange
@@ -75,6 +92,23 @@ public class ToDoControllerTest
     }
     
     [Fact]
+    public async void PostTodo_DoesNotExist()
+    {
+        // Arrange
+        _toDoService.Setup(x => x.GetById(_testTodo.Id))
+            .Returns(Task.FromResult<TodoItem>(null));
+        var toDoController = new ToDoController(_toDoService.Object);
+
+        // Act
+        var result = await toDoController.PostToDo(_testTodo);
+
+        //Assert
+        Assert.NotNull(result);
+        var actualResult = result.Result as NotFoundResult;
+        Assert.Equal(404, actualResult.StatusCode);
+    }
+    
+    [Fact]
     public async void PutTodo_ShouldCreateOne()
     {
         // Arrange
@@ -91,6 +125,23 @@ public class ToDoControllerTest
         Debug.Assert(result.Value != null, "result.Value != null");
         Assert.Equal(_testTodo.Id, result.Value.Id);
         Assert.Equal(_testTodo.Description, result.Value.Description);
+    }
+    
+    [Fact]
+    public async void PutTodo_DoesNotExist()
+    {
+        // Arrange
+        _toDoService.Setup(x => x.GetById(_testTodo.Id))
+            .Returns(Task.FromResult<TodoItem>(null));
+        var toDoController = new ToDoController(_toDoService.Object);
+
+        // Act
+        var result = await toDoController.PutToDo(_testTodo.Id, _testTodo);
+
+        //Assert
+        Assert.NotNull(result);
+        var actualResult = result.Result as NotFoundResult;
+        Assert.Equal(404, actualResult.StatusCode);
     }
     
     [Fact]
