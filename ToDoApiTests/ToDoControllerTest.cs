@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NuGet.Frameworks;
 using ToDoApi.Controllers;
@@ -46,8 +48,9 @@ public class ToDoControllerTest
         var result = await toDoController.GetToDoById(idToGet);
 
         // Assert
-        Assert.Equal(idToGet, result.Id);
-        Assert.Equal(_testTodo.Description, result.Description);
+        Debug.Assert(result.Value != null, "result.Value != null");
+        Assert.Equal(idToGet, result.Value.Id);
+        Assert.Equal(_testTodo.Description, result.Value.Description);
     }
     
     [Fact]
@@ -63,26 +66,28 @@ public class ToDoControllerTest
         // Act
         var result = await toDoController.PostToDo(_testTodo);
 
-        // Assert 
-        Assert.Equal(_testTodo.Id, result.Id);
-        Assert.Equal(_testTodo.Description, result.Description);
+        // Assert
+        Debug.Assert(result.Value != null, "result.Value != null");
+        Assert.Equal(_testTodo.Id, result.Value.Id);
+        Assert.Equal(_testTodo.Description, result.Value.Description);
     }
     
     [Fact]
-    public async void PurtTodo_ShouldCreateOne()
+    public async void PutTodo_ShouldCreateOne()
     {
         // Arrange
-        _toDoService.Setup(x => x.Create(_testTodo))
+        _toDoService.Setup(x => x.Update(_testTodo.Id, _testTodo))
             .Returns(Task.FromResult(_testTodo));
         _toDoService.Setup(x => x.GetById(_testTodo.Id))
             .Returns(Task.FromResult(_testTodo));
         var toDoController = new ToDoController(_toDoService.Object);
 
         // Act
-        var result = await toDoController.PostToDo(_testTodo);
+        var result = await toDoController.PutToDo(_testTodo.Id, _testTodo);
 
-        // Assert 
-        Assert.Equal(_testTodo.Id, result.Id);
-        Assert.Equal(_testTodo.Description, result.Description);
+        // Assert
+        Debug.Assert(result.Value != null, "result.Value != null");
+        Assert.Equal(_testTodo.Id, result.Value.Id);
+        Assert.Equal(_testTodo.Description, result.Value.Description);
     }
 }

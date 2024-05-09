@@ -16,15 +16,20 @@ public class ToDoController : ControllerBase
     
     [HttpGet(Name = "GetToDo")]
     public async Task<List<TodoItem>> GetAllToDos() => await _toDoService.GetAll();
-    
+
     [HttpGet("{id:length(24)}")]
-    public async Task<TodoItem> GetToDoById(string id) => await _toDoService.GetById(id);
+    public async Task<ActionResult<TodoItem>> GetToDoById(string id)
+    {
+        var toDo = await _toDoService.GetById(id);
+        return (toDo is null) ? NotFound() : toDo;
+    }
 
     [HttpPost]
-    public async Task<TodoItem> PostToDo(TodoItem toDo)
+    public async Task<ActionResult<TodoItem>> PostToDo(TodoItem toDo)
     {
         await _toDoService.Create(toDo);
-        return await _toDoService.GetById(toDo.Id);
+        var createdToDo = await _toDoService.GetById(toDo.Id);
+        return (createdToDo is null) ? NotFound() : createdToDo;
     }
     
     [HttpPut("{id:length(24)}")]
