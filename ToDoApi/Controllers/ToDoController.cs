@@ -43,7 +43,7 @@ public class ToDoController : ControllerBase
         }
 
         toDo.Id = existingToDo.Id;
-        await _toDoService.Update(id, existingToDo);
+        await _toDoService.Update(id, toDo);
         return await _toDoService.GetById(id);
     }
     
