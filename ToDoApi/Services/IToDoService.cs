@@ -5,4 +5,5 @@ namespace ToDoApi.Services;
 public interface IToDoService
 {
     Task<List<TodoItem>> GetAll();
+    Task<TodoItem> GetById(string id);
 }

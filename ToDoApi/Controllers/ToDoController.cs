@@ -15,5 +15,10 @@ public class ToDoController : ControllerBase
 
     
     [HttpGet(Name = "GetToDo")]
-    public async Task<List<TodoItem>> Get() => await _toDoService.GetAll();
+    public async Task<List<TodoItem>> GetAllToDos() => await _toDoService.GetAll();
+    
+    [HttpGet]
+    [Route("{Id}")]
+    public async Task<TodoItem> GetToDoById(string Id) => await _toDoService.GetById(Id);
+    
 }

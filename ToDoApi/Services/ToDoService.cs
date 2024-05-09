@@ -22,4 +22,9 @@ public class ToDoService : IToDoService
 
     public async Task<List<TodoItem>> GetAll() =>
         await _toDoItemsCollection.Find(_ => true).ToListAsync();
+
+    public Task<TodoItem> GetById(string id)
+    {
+        return _toDoItemsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+    }
 }
