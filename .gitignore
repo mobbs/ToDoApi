@@ -482,3 +482,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+**/*.csproj
+**/*.zip
+**/site
+ToDoApi/ToDoApi.csproj

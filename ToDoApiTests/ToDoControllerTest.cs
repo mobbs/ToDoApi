@@ -13,7 +13,7 @@ public class ToDoControllerTest
     private readonly TodoItem _testTodo = new() { Id = "663b81458d9e481255821cf1", Description = "Do something" };
 
     [Fact]
-    public async void GetToDo_ShouldReturnList()
+    public async Task GetToDo_ShouldReturnList()
     {
         // Arrange
         _toDoService.Setup(x => x.GetAll())
@@ -29,7 +29,7 @@ public class ToDoControllerTest
     }
 
     [Fact]
-    public async void GetToDoById_ShouldReturnOne()
+    public async Task GetToDoById_ShouldReturnOne()
     {
         // Arrange
         var idToGet = _testTodo.Id!;
@@ -47,7 +47,7 @@ public class ToDoControllerTest
     }
     
     [Fact]
-    public async void GetToDoById_DoesNotExist()
+    public async Task GetToDoById_DoesNotExist()
     {
         // Arrange
         _toDoService.Setup(x => x.GetById(_testTodo.Id!))
@@ -65,7 +65,7 @@ public class ToDoControllerTest
     }
     
     [Fact]
-    public async void PostTodo_ShouldCreateOne()
+    public async Task PostTodo_ShouldCreateOne()
     {
         // Arrange
         _toDoService.Setup(x => x.Create(_testTodo))
@@ -84,7 +84,7 @@ public class ToDoControllerTest
     }
     
     [Fact]
-    public async void PostTodo_DoesNotExist()
+    public async Task PostTodo_DoesNotExist()
     {
         // Arrange
         _toDoService.Setup(x => x.GetById(_testTodo.Id!))
@@ -102,7 +102,7 @@ public class ToDoControllerTest
     }
     
     [Fact]
-    public async void PutTodo_ShouldCreateOne()
+    public async Task PutTodo_ShouldCreateOne()
     {
         // Arrange
         _toDoService.Setup(x => x.Update(_testTodo.Id!, _testTodo))
@@ -121,7 +121,7 @@ public class ToDoControllerTest
     }
     
     [Fact]
-    public async void PutTodo_DoesNotExist()
+    public async Task PutTodo_DoesNotExist()
     {
         // Arrange
         _toDoService.Setup(x => x.GetById(_testTodo.Id!))
@@ -139,7 +139,7 @@ public class ToDoControllerTest
     }
     
     [Fact]
-    public async void DeleteTodo_ShouldRemoveOne()
+    public async Task DeleteTodo_ShouldRemoveOne()
     {
         // Arrange
         _toDoService.Setup(x => x.Remove(_testTodo.Id!))
@@ -157,7 +157,7 @@ public class ToDoControllerTest
     }
     
     [Fact]
-    public async void DeleteTodo_DoesNotExist()
+    public async Task DeleteTodo_DoesNotExist()
     {
         // Arrange
         _toDoService.Setup(x => x.Remove(_testTodo.Id!))
